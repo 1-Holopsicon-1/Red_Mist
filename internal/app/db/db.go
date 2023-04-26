@@ -49,6 +49,16 @@ func Migrate(db *gorm.DB) {
 	if err != nil {
 		fmt.Println(err)
 		panic("Cant migrate Post")
+	}
 
+	err = db.AutoMigrate(&models.Comments{})
+	if err != nil {
+		fmt.Println(err)
+		panic("Cant migrate Post")
+	}
+	err = db.AutoMigrate(&models.Subscriptions{})
+	if err != nil {
+		fmt.Println(err)
+		panic("Cant migrate Post")
 	}
 }

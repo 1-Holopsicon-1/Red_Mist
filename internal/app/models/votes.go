@@ -1,8 +1,10 @@
 package models
 
 type Votes struct {
-	id       uint    `gorm:"primaryKey;autoIncrement"`
-	userId   []Users `gorm:"foreignKey:id"`
-	postId   []Posts `gorm:"foreignKey:id"`
-	typeVote bool
+	ID       uint  `gorm:"primaryKey;autoIncrement"`
+	UserId   uint  `gorm:"foreignKey:UserID"`
+	PostId   uint  `gorm:"foreignKey:PostID"`
+	TypeVote bool  `gorm:"boolean;index"`
+	User     Users `gorm:"foreignKey:UserId"`
+	Post     Posts `gorm:"foreignKey:PostId"`
 }

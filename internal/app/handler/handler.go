@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"RedMist/internal/app/handler/custom"
+	"RedMist/internal/app/services"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
@@ -9,10 +11,12 @@ import (
 )
 
 type Handler struct {
+	handler.UserHandler
 	DB *gorm.DB
 }
 
 func (h *Handler) InitRoutes() *chi.Mux {
+	userService := services.NewUserService(h.DB)
 	router := chi.NewRouter()
 	router.Use(cors.Handler(cors.Options{
 		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
@@ -28,9 +32,12 @@ func (h *Handler) InitRoutes() *chi.Mux {
 	router.Use(middleware.Heartbeat("/ping"))
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {})
 	router.Route("/auth", func(auth chi.Router) {
-		auth.Post("/register", h.register)
-		auth.Post("/login", h.login)
+		auth.Post("/register", h.Register.Register)
+		auth.Post("/login", h.Login.Login)
 	})
-	
+	router.Route("/", func(r chi.Router) {
+
+	})
+
 	return router
 }

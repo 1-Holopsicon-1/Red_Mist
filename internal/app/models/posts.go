@@ -1,8 +1,9 @@
 package models
 
 type Posts struct {
-	id         string  `gorm:"primaryKey;autoIncrement"`
-	text       string  `gorm:"text"`
-	contentUrl string  `gorm:"text"`
-	authorId   []Users `gorm:"foreignKey:id"` //?
+	ID         string `gorm:"primaryKey;autoIncrement"`
+	Text       string `gorm:"text"`
+	ContentUrl string `gorm:"text"`
+	AuthorId   uint
+	User       Users `gorm:"-:migration;foreignKey:AuthorId"`
 }
